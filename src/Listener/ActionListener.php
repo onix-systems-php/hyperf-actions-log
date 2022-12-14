@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace OnixSystemsPHP\HyperfActionsLog\Listener;
 
-use OnixSystemsPHP\HyperfAuth\SessionManager;
 use OnixSystemsPHP\HyperfActionsLog\Event\Action;
 use OnixSystemsPHP\HyperfActionsLog\Repository\ActionRepository;
 use Hyperf\Event\Annotation\Listener;
@@ -15,8 +14,7 @@ use Hyperf\Utils\ApplicationContext;
 class ActionListener implements ListenerInterface
 {
     public function __construct(
-        private ActionRepository $rAction,
-        private SessionManager $sessionManager,
+        private ActionRepository $rAction
     ) {
     }
 
@@ -36,7 +34,7 @@ class ActionListener implements ListenerInterface
         if ($event instanceof Action) {
             $clientData = $this->getClientData();
             $action = $this->rAction->create([
-                'user_id' => $event->actor?->id ?? $this->sessionManager->user()?->id,
+                'user_id' => $event->actor?->id,
                 'action' => $event->action,
                 'foreign_id' => $event->subject?->getKey(),
                 'foreign_table' => $event->subject?->getTable(),

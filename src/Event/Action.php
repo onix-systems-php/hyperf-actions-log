@@ -11,7 +11,7 @@ class Action
         public string $action,
         public ?Model $subject = null,
         public array $data = [],
-        public ?Model $actor = null,
+        public ?Model $actor,
     ) {
     }
 }
