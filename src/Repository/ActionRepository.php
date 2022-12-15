@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace OnixSystemsPHP\HyperfActionsLog\Repository;
 
+use Hyperf\Database\Model\Builder;
 use OnixSystemsPHP\HyperfActionsLog\Model\Action;
 use OnixSystemsPHP\HyperfActionsLog\Model\Filter\ActionsFilter;
 use OnixSystemsPHP\HyperfCore\DTO\Common\PaginationRequestDTO;
 use OnixSystemsPHP\HyperfCore\DTO\Common\PaginationResultDTO;
 use OnixSystemsPHP\HyperfCore\Repository\AbstractRepository;
-use Hyperf\Database\Model\Builder;
 
 /**
  * @method Action create(array $data)
