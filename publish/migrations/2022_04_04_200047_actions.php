@@ -20,10 +20,6 @@ class Actions extends Migration
             $table->string('foreign_table')->nullable();
             $table->json('data');
             $table->timestamps();
-            $table->foreign('user_id')
-                ->references('id')->on('users')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
         });
     }
 

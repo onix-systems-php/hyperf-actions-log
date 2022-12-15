@@ -5,12 +5,10 @@ namespace OnixSystemsPHP\HyperfActionsLog\Listener;
 
 use OnixSystemsPHP\HyperfActionsLog\Event\Action;
 use OnixSystemsPHP\HyperfActionsLog\Repository\ActionRepository;
-use Hyperf\Event\Annotation\Listener;
 use Hyperf\Event\Contract\ListenerInterface;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\Utils\ApplicationContext;
 
-#[Listener]
 class ActionListener implements ListenerInterface
 {
     public function __construct(
@@ -34,7 +32,7 @@ class ActionListener implements ListenerInterface
         if ($event instanceof Action) {
             $clientData = $this->getClientData();
             $action = $this->rAction->create([
-                'user_id' => $event->actor?->id,
+                'user_id' => $this->getUserId($event),
                 'action' => $event->action,
                 'foreign_id' => $event->subject?->getKey(),
                 'foreign_table' => $event->subject?->getTable(),
@@ -44,6 +42,14 @@ class ActionListener implements ListenerInterface
             ]);
             $this->rAction->save($action);
         }
+    }
+
+    protected function getUserId(Action $event): mixed
+    {
+        if (!empty($event->actor)) {
+            return $event->actor->getKey();
+        }
+        return null;
     }
 
     private function getClientData(): array
