@@ -27,6 +27,9 @@ class ConfigProvider
                     ],
                 ],
             ],
+            'listeners' => [
+                \OnixSystemsPHP\HyperfActionsLog\Listener\ActionListener::class,
+            ],
             'publish' => [
                 [
                     'id' => 'migration',
