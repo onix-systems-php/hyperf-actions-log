@@ -31,8 +31,8 @@ class ConfigProvider
                 [
                     'id' => 'migration',
                     'description' => 'The addition for migration from onix-systems-php/hyperf-actions-log.',
-                    'source' => __DIR__ . '/../publish/migrations',
-                    'destination' => BASE_PATH . '/migrations',
+                    'source' => __DIR__ . '/../publish/migrations/2022_04_04_200047_actions.php',
+                    'destination' => BASE_PATH . '/migrations/2022_04_04_200047_actions.php',
                 ],
             ],
         ];
