@@ -9,9 +9,9 @@ class Action
 {
     public function __construct(
         public string $action,
-        public ?Model $subject = null,
+        public Model|null $subject = null,
         public array $data = [],
-        public ?Model $actor = null,
+        public Model|null $actor = null,
     ) {
     }
 }
