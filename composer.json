@@ -20,7 +20,7 @@
     "require": {
         "php": ">=8.0",
         "ext-json": "*",
-        "onix-systems-php/hyperf-core": ">=1.0.5",
+        "onix-systems-php/hyperf-core": ">=1.0.6",
         "hyperf/database": "^2.2|^3.0",
         "hyperf/event": "^2.2|^3.0",
         "hyperf/http-server": "^2.2|^3.0",

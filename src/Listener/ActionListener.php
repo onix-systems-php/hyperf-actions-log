@@ -1,13 +1,13 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 namespace OnixSystemsPHP\HyperfActionsLog\Listener;
 
-use OnixSystemsPHP\HyperfActionsLog\Event\Action;
-use OnixSystemsPHP\HyperfActionsLog\Repository\ActionRepository;
 use Hyperf\Event\Contract\ListenerInterface;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\Utils\ApplicationContext;
+use OnixSystemsPHP\HyperfActionsLog\Event\Action;
+use OnixSystemsPHP\HyperfActionsLog\Repository\ActionRepository;
 
 class ActionListener implements ListenerInterface
 {
@@ -28,7 +28,6 @@ class ActionListener implements ListenerInterface
      */
     public function process(object $event)
     {
-
         if ($event instanceof Action) {
             $clientData = $this->getClientData();
             $action = $this->rAction->create([
@@ -46,7 +45,7 @@ class ActionListener implements ListenerInterface
 
     protected function getUserId(Action $event): mixed
     {
-        if (!empty($event->actor)) {
+        if (! empty($event->actor)) {
             return $event->actor->getKey();
         }
         return null;
@@ -57,17 +56,17 @@ class ActionListener implements ListenerInterface
         $request = ApplicationContext::getContainer()->get(RequestInterface::class);
         $headers = $request->getHeaders();
 
-        if (isset($headers['x-forwarded-for'][0]) && !empty($headers['x-forwarded-for'][0])) {
+        if (isset($headers['x-forwarded-for'][0]) && ! empty($headers['x-forwarded-for'][0])) {
             $ip = $headers['x-forwarded-for'][0];
-        } elseif (isset($headers['x-real-ip'][0]) && !empty($headers['x-real-ip'][0])) {
+        } elseif (isset($headers['x-real-ip'][0]) && ! empty($headers['x-real-ip'][0])) {
             $ip = $headers['x-real-ip'][0];
         } else {
             $serverParams = $request->getServerParams();
             $ip = $serverParams['remote_addr'] ?? null;
         }
 
-        $userAgent = isset($headers['user-agent'][0]) &&
-        !empty($headers['user-agent'][0]) ? $headers['user-agent'][0] : null;
+        $userAgent = isset($headers['user-agent'][0])
+        && ! empty($headers['user-agent'][0]) ? $headers['user-agent'][0] : null;
 
         return [
             'ip' => $ip,

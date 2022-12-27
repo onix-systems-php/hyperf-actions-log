@@ -1,6 +1,6 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 namespace OnixSystemsPHP\HyperfActionsLog\Repository;
 
 use Hyperf\Database\Model\Builder;
@@ -20,12 +20,20 @@ class ActionRepository extends AbstractRepository
 {
     protected string $modelClass = Action::class;
 
-    public function getPaginated(array $filters, PaginationRequestDTO $paginationDTO): PaginationResultDTO
-    {
-        return $this->paginate($this->filter(new ActionsFilter($filters)), $paginationDTO);
+    public function getPaginated(
+        array $filters,
+        PaginationRequestDTO $paginationDTO,
+        array $contain = []
+    ): PaginationResultDTO {
+        $query = $this->filter(new ActionsFilter($filters));
+        if (! empty($contain)) {
+            $query->with($contain);
+        }
+
+        return $this->paginate($query, $paginationDTO);
     }
 
-    //-----
+    // -----
 
     public function getById(int $id, bool $lock = false, bool $force = false): ?Action
     {
@@ -36,7 +44,7 @@ class ActionRepository extends AbstractRepository
         return $this->query()->where('id', $id);
     }
 
-    //-----
+    // -----
 
     protected function fetchOne(Builder $builder, bool $lock, bool $force): ?Action
     {
