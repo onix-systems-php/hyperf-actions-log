@@ -1,9 +1,10 @@
 <?php
-declare(strict_types=1);
 
+declare(strict_types=1);
 namespace OnixSystemsPHP\HyperfActionsLog\Event;
 
 use Hyperf\Database\Model\Model;
+use OnixSystemsPHP\HyperfCore\Contract\CoreAuthenticatable;
 
 class Action
 {
@@ -11,7 +12,7 @@ class Action
         public string $action,
         public Model|null $subject = null,
         public array $data = [],
-        public Model|null $actor = null,
+        public CoreAuthenticatable|null $actor = null,
     ) {
     }
 }

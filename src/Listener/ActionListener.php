@@ -46,7 +46,7 @@ class ActionListener implements ListenerInterface
     protected function getUserId(Action $event): mixed
     {
         if (! empty($event->actor)) {
-            return $event->actor->getKey();
+            return $event->actor->getId();
         }
         return null;
     }
