@@ -8,11 +8,13 @@ use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\Utils\ApplicationContext;
 use OnixSystemsPHP\HyperfActionsLog\Event\Action;
 use OnixSystemsPHP\HyperfActionsLog\Repository\ActionRepository;
+use OnixSystemsPHP\HyperfCore\Contract\CoreAuthenticatableProvider;
 
 class ActionListener implements ListenerInterface
 {
     public function __construct(
-        private ActionRepository $rAction
+        private ActionRepository $rAction,
+        private CoreAuthenticatableProvider $authenticatableProvider,
     ) {
     }
 
@@ -48,7 +50,7 @@ class ActionListener implements ListenerInterface
         if (! empty($event->actor)) {
             return $event->actor->getId();
         }
-        return null;
+        return $this->authenticatableProvider->user()?->getId();
     }
 
     private function getClientData(): array
