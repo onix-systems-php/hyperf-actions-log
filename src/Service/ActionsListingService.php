@@ -15,7 +15,7 @@ class ActionsListingService
 
     public function __construct(
         private ActionRepository $rActionLog,
-        private ?CorePolicyGuard $policyGuard = null,
+        private ?CorePolicyGuard $policyGuard,
     ) {
     }
 
