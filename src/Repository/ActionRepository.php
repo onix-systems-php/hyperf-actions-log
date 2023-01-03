@@ -3,11 +3,11 @@
 declare(strict_types=1);
 namespace OnixSystemsPHP\HyperfActionsLog\Repository;
 
-use Hyperf\Database\Model\Builder;
 use OnixSystemsPHP\HyperfActionsLog\Model\Action;
 use OnixSystemsPHP\HyperfActionsLog\Model\Filter\ActionsFilter;
 use OnixSystemsPHP\HyperfCore\DTO\Common\PaginationRequestDTO;
 use OnixSystemsPHP\HyperfCore\DTO\Common\PaginationResultDTO;
+use OnixSystemsPHP\HyperfCore\Model\Builder;
 use OnixSystemsPHP\HyperfCore\Repository\AbstractRepository;
 
 /**
@@ -15,6 +15,8 @@ use OnixSystemsPHP\HyperfCore\Repository\AbstractRepository;
  * @method Action update(Action $model, array $data)
  * @method Action save(Action $model)
  * @method bool delete(Action $model)
+ * @method ActionRepository|Builder finder(string $type, ...$parameters)
+ * @method null|Action fetchOne(bool $lock, bool $force)
  */
 class ActionRepository extends AbstractRepository
 {
@@ -25,31 +27,31 @@ class ActionRepository extends AbstractRepository
         PaginationRequestDTO $paginationDTO,
         array $contain = []
     ): PaginationResultDTO {
-        $query = $this->filter(new ActionsFilter($filters));
+        $query = $this->query()->filter(new ActionsFilter($filters));
         if (! empty($contain)) {
             $query->with($contain);
         }
 
-        return $this->paginate($query, $paginationDTO);
+        return $query->paginateDTO($paginationDTO);
     }
-
-    // -----
 
     public function getById(int $id, bool $lock = false, bool $force = false): ?Action
     {
-        return $this->fetchOne($this->queryById($id), $lock, $force);
-    }
-    public function queryById(int $id): Builder
-    {
-        return $this->query()->where('id', $id);
+        return $this->finder('id')->fetchOne($lock, $force);
     }
 
-    // -----
-
-    protected function fetchOne(Builder $builder, bool $lock, bool $force): ?Action
+    public function scopeId(Builder $query, int $id): void
     {
-        /** @var ?Action $result */
-        $result = parent::fetchOne($builder, $lock, $force);
-        return $result;
+        $query->where('id', '=', $id);
+    }
+
+    public function scopeUserId(Builder $query, int $id): void
+    {
+        $query->where('user_id', '=', $id);
+    }
+
+    public function scopeAction(Builder $query, string $action): void
+    {
+        $query->where('action', '=', $action);
     }
 }

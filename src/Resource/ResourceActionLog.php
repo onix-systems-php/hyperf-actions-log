@@ -6,24 +6,26 @@ namespace OnixSystemsPHP\HyperfActionsLog\Resource;
 use App\Resource\User\ResourceUser;
 use OnixSystemsPHP\HyperfActionsLog\Model\Action;
 use OnixSystemsPHP\HyperfCore\Resource\AbstractResource;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 
+#[OA\Schema(
+    schema: 'ResourceActionLog',
+    properties: [
+        new OA\Property(property: 'id', type: 'integer'),
+        new OA\Property(property: 'user_id', type: 'integer'),
+        new OA\Property(property: 'user', ref: '#/components/schemas/ResourceUser'),
+        new OA\Property(property: 'action', type: 'string'),
+        new OA\Property(property: 'foreign_id', type: 'string'),
+        new OA\Property(property: 'foreign_table', type: 'string'),
+        new OA\Property(property: 'data', type: 'array', items: new OA\Items(type: 'string')),
+        new OA\Property(property: 'ip', type: 'string'),
+        new OA\Property(property: 'user_agent', type: 'string'),
+        new OA\Property(property: 'created_at', type: 'string'),
+        new OA\Property(property: 'updated_at', type: 'string'),
+    ],
+    type: 'object',
+)]
 /**
- * @OA\Schema(
- *     schema="ResourceActionLog",
- *     type="object",
- *     @OA\Property(property="id", type="integer"),
- *     @OA\Property(property="user_id", type="integer"),
- *     @OA\Property(property="user", ref="#/components/schemas/ResourceUser"),
- *     @OA\Property(property="action", type="string"),
- *     @OA\Property(property="foreign_id", type="string"),
- *     @OA\Property(property="foreign_table", type="string"),
- *     @OA\Property(property="data", type="array", @OA\Items(type="string")),
- *     @OA\Property(property="ip", type="string"),
- *     @OA\Property(property="user_agent", type="string"),
- *     @OA\Property(property="created_at", type="string"),
- *     @OA\Property(property="updated_at", type="string"),
- * )
  * @method __construct(Action $resource)
  * @property Action $resource
  */

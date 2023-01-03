@@ -28,7 +28,7 @@ class ActionListener implements ListenerInterface
     /**
      * @param Action $event
      */
-    public function process(object $event)
+    public function process(object $event): void
     {
         if ($event instanceof Action) {
             $clientData = $this->getClientData();

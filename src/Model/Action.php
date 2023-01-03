@@ -21,13 +21,13 @@ use OnixSystemsPHP\HyperfCore\Model\AbstractOwnedModel;
  */
 class Action extends AbstractOwnedModel
 {
-    protected $table = 'actions';
+    protected ?string $table = 'actions';
 
-    protected $guarded = [];
+    protected array $guarded = [];
 
-    protected $hidden = [];
+    protected array $hidden = [];
 
-    protected $casts = [
+    protected array $casts = [
         'id' => 'integer',
         'user_id' => 'integer',
         'action' => 'string',
