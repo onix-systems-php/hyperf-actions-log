@@ -54,4 +54,9 @@ class ActionRepository extends AbstractRepository
     {
         $query->where('action', '=', $action);
     }
+
+    public function scopeUserOnly(Builder $query): void
+    {
+        $query->where('user_id', '!=', null);
+    }
 }

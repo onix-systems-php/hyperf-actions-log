@@ -12,6 +12,7 @@ use OpenApi\Attributes as OA;
  */
 #[OA\Parameter(parameter: 'ActionsFilter__action', name: 'action', in: 'query', schema: new OA\Schema(type: 'string'), example: 'login')]
 #[OA\Parameter(parameter: 'ActionsFilter__user_id', name: 'user_id', in: 'query', schema: new OA\Schema(type: 'integer'), example: '1')]
+#[OA\Parameter(parameter: 'ActionsFilter__user_only', name: 'user_only', in: 'query', schema: new OA\Schema(type: 'boolean'), example: 'true')]
 class ActionsFilter extends AbstractFilter
 {
     public function action(string $param): void
@@ -22,5 +23,10 @@ class ActionsFilter extends AbstractFilter
     public function userId(int $param): void
     {
         $this->repository->scopeUserId($this->builder, $param);
+    }
+
+    public function userOnly(): void
+    {
+        $this->repository->scopeUserOnly($this->builder);
     }
 }
