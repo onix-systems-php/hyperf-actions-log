@@ -17,16 +17,16 @@ class ActionsFilter extends AbstractFilter
 {
     public function action(string $param): void
     {
-        $this->repository->scopeAction($this->builder, $param);
+        $this->builder->finder('action', $param);
     }
 
     public function userId(int $param): void
     {
-        $this->repository->scopeUserId($this->builder, $param);
+        $this->builder->finder('userId', $param);
     }
 
     public function userOnly(): void
     {
-        $this->repository->scopeUserOnly($this->builder);
+        $this->builder->finder('userOnly');
     }
 }
