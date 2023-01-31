@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace OnixSystemsPHP\HyperfActionsLog\Controller;
 
 use Hyperf\HttpServer\Contract\RequestInterface;
+use OnixSystemsPHP\HyperfActionsLog\Resource\ResourceActionLogsOption;
 use OnixSystemsPHP\HyperfActionsLog\Resource\ResourceActionLogsPaginated;
+use OnixSystemsPHP\HyperfActionsLog\Service\ActionLogsOptionsService;
 use OnixSystemsPHP\HyperfActionsLog\Service\ActionsListingService;
 use OnixSystemsPHP\HyperfCore\Controller\AbstractController;
 use OnixSystemsPHP\HyperfCore\DTO\Common\PaginationRequestDTO;
@@ -39,5 +41,28 @@ class ActionLogsController extends AbstractController
         return ResourceActionLogsPaginated::make(
             $service->list($request->getQueryParams(), PaginationRequestDTO::make($request))
         );
+    }
+
+    #[OA\Get(
+        path: '/v1/admin/action_logs/options',
+        operationId: 'actionLogsOptions',
+        summary: 'Logs Options',
+        security: [['bearerAuth' => []]],
+        tags: ['action_logs'],
+        parameters: [new OA\Parameter(ref: '#/components/parameters/Locale')],
+        responses: [
+            new OA\Response(ref: '', response: 200, description: '', content: new OA\JsonContent(properties: [
+                new OA\Property(property: 'data', ref: '#/components/schemas/ResourceActionLogsOption'),
+                new OA\Property(property: 'status', type: 'string'),
+            ])),
+            new OA\Response(ref: '#/components/responses/401', response: 401),
+            new OA\Response(ref: '#/components/responses/422', response: 422),
+            new OA\Response(ref: '#/components/responses/500', response: 500),
+        ],
+    )]
+    public function options(ActionLogsOptionsService $optionsService): ResourceActionLogsOption
+    {
+        $option = $optionsService->run();
+        return new ResourceActionLogsOption($option);
     }
 }

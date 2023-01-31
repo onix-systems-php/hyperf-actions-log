@@ -6,4 +6,5 @@ use OnixSystemsPHP\HyperfActionsLog\Controller\ActionLogsController;
 
 Router::addGroup('/v1/admin/action_logs', function () {
     Router::get('', [ActionLogsController::class, 'index']);
+    Router::get('/options', [ActionLogsController::class, 'options']);
 });
