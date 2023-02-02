@@ -3,12 +3,16 @@
 declare(strict_types=1);
 namespace OnixSystemsPHP\HyperfActionsLog;
 
+use App\User\Resource\ResourceUser;
+use OnixSystemsPHP\HyperfActionsLog\Contract\UserResource;
+
 class ConfigProvider
 {
     public function __invoke(): array
     {
         return [
             'dependencies' => [
+                UserResource::class => ResourceUser::class,
             ],
             'commands' => [
             ],

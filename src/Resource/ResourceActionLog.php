@@ -3,7 +3,7 @@
 declare(strict_types=1);
 namespace OnixSystemsPHP\HyperfActionsLog\Resource;
 
-use App\Resource\User\ResourceUser;
+use OnixSystemsPHP\HyperfActionsLog\Contract\UserResource;
 use OnixSystemsPHP\HyperfActionsLog\Model\Action;
 use OnixSystemsPHP\HyperfCore\Resource\AbstractResource;
 use OpenApi\Attributes as OA;
@@ -41,7 +41,7 @@ class ResourceActionLog extends AbstractResource
         return [
             'id' => $this->resource->id,
             'user_id' => $this->resource->user_id,
-            'user' => ResourceUser::make($this->resource->user),
+            'user' => UserResource::make($this->resource->user),
             'action' => $this->resource->action,
             'foreign_id' => $this->resource->foreign_id,
             'foreign_table' => $this->resource->foreign_table,
