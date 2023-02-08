@@ -10,7 +10,7 @@ class Action
 {
     public function __construct(
         public string $action,
-        public Model|null $subject = null,
+        public Model|CoreAuthenticatable|null $subject = null,
         public array $data = [],
         public CoreAuthenticatable|null $actor = null,
     ) {
