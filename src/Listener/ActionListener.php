@@ -55,20 +55,25 @@ class ActionListener implements ListenerInterface
 
     private function getClientData(): array
     {
-        $request = ApplicationContext::getContainer()->get(RequestInterface::class);
-        $headers = $request->getHeaders();
+        try {
+            $request = ApplicationContext::getContainer()->get(RequestInterface::class);
+            $headers = $request->getHeaders();
 
-        if (isset($headers['x-forwarded-for'][0]) && ! empty($headers['x-forwarded-for'][0])) {
-            $ip = $headers['x-forwarded-for'][0];
-        } elseif (isset($headers['x-real-ip'][0]) && ! empty($headers['x-real-ip'][0])) {
-            $ip = $headers['x-real-ip'][0];
-        } else {
-            $serverParams = $request->getServerParams();
-            $ip = $serverParams['remote_addr'] ?? null;
+            if (isset($headers['x-forwarded-for'][0]) && !empty($headers['x-forwarded-for'][0])) {
+                $ip = $headers['x-forwarded-for'][0];
+            } elseif (isset($headers['x-real-ip'][0]) && !empty($headers['x-real-ip'][0])) {
+                $ip = $headers['x-real-ip'][0];
+            } else {
+                $serverParams = $request->getServerParams();
+                $ip           = $serverParams['remote_addr'] ?? null;
+            }
+
+            $userAgent = isset($headers['user-agent'][0]) && !empty($headers['user-agent'][0])
+                ? $headers['user-agent'][0] : null;
+        } catch (\Throwable) {
+            $ip = null;
+            $userAgent = null;
         }
-
-        $userAgent = isset($headers['user-agent'][0])
-        && ! empty($headers['user-agent'][0]) ? $headers['user-agent'][0] : null;
 
         return [
             'ip' => $ip,
