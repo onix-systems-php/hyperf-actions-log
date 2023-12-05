@@ -1,6 +1,15 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
+
 namespace OnixSystemsPHP\HyperfActionsLog\Event;
 
 use Hyperf\Database\Model\Model;
@@ -10,9 +19,8 @@ class Action
 {
     public function __construct(
         public string $action,
-        public Model|null $subject = null,
+        public null|Model $subject = null,
         public array $data = [],
-        public CoreAuthenticatable|null $actor = null,
-    ) {
-    }
+        public null|CoreAuthenticatable $actor = null,
+    ) {}
 }

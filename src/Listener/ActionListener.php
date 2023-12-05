@@ -1,11 +1,20 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
+
 namespace OnixSystemsPHP\HyperfActionsLog\Listener;
 
 use Hyperf\Event\Contract\ListenerInterface;
 use Hyperf\HttpServer\Contract\RequestInterface;
-use Hyperf\Utils\ApplicationContext;
+use Hyperf\Context\ApplicationContext;
 use OnixSystemsPHP\HyperfActionsLog\Event\Action;
 use OnixSystemsPHP\HyperfActionsLog\Repository\ActionRepository;
 use OnixSystemsPHP\HyperfCore\Contract\CoreAuthenticatableProvider;
@@ -15,8 +24,7 @@ class ActionListener implements ListenerInterface
     public function __construct(
         private ActionRepository $rAction,
         private CoreAuthenticatableProvider $authenticatableProvider,
-    ) {
-    }
+    ) {}
 
     public function listen(): array
     {
@@ -59,16 +67,16 @@ class ActionListener implements ListenerInterface
             $request = ApplicationContext::getContainer()->get(RequestInterface::class);
             $headers = $request->getHeaders();
 
-            if (isset($headers['x-forwarded-for'][0]) && !empty($headers['x-forwarded-for'][0])) {
+            if (isset($headers['x-forwarded-for'][0]) && ! empty($headers['x-forwarded-for'][0])) {
                 $ip = $headers['x-forwarded-for'][0];
-            } elseif (isset($headers['x-real-ip'][0]) && !empty($headers['x-real-ip'][0])) {
+            } elseif (isset($headers['x-real-ip'][0]) && ! empty($headers['x-real-ip'][0])) {
                 $ip = $headers['x-real-ip'][0];
             } else {
                 $serverParams = $request->getServerParams();
-                $ip           = $serverParams['remote_addr'] ?? null;
+                $ip = $serverParams['remote_addr'] ?? null;
             }
 
-            $userAgent = isset($headers['user-agent'][0]) && !empty($headers['user-agent'][0])
+            $userAgent = isset($headers['user-agent'][0]) && ! empty($headers['user-agent'][0])
                 ? $headers['user-agent'][0] : null;
         } catch (\Throwable) {
             $ip = null;
