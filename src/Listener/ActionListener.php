@@ -2,19 +2,16 @@
 
 declare(strict_types=1);
 /**
- * This file is part of Hyperf.
+ * This file is part of the extension library for Hyperf.
  *
- * @link     https://www.hyperf.io
- * @document https://hyperf.wiki
- * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 
 namespace OnixSystemsPHP\HyperfActionsLog\Listener;
 
+use Hyperf\Context\ApplicationContext;
 use Hyperf\Event\Contract\ListenerInterface;
 use Hyperf\HttpServer\Contract\RequestInterface;
-use Hyperf\Context\ApplicationContext;
 use OnixSystemsPHP\HyperfActionsLog\Event\Action;
 use OnixSystemsPHP\HyperfActionsLog\Repository\ActionRepository;
 use OnixSystemsPHP\HyperfCore\Contract\CoreAuthenticatableProvider;
